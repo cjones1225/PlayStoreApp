@@ -31,29 +31,14 @@ app.get('/apps', (req, res) => {
         })
     }
 
-    if(sort) {
-        if(app){
-            results.sort((a, b) => {
-                var AppA = a.App.toUpperCase();
-                var AppB = b.App.toUpperCase();
-                if (AppA < AppB) {
-                    return -1;
-                } else if(AppA > AppB){
-                    return 1;
-                } else {
-                    return 0;
-                }
-            })
-        }else if(rating){
-            results.sort((a, b) => {
-                return a.Rating - b.Rating;
-            })
-        } else {
-            return results;
-        }
-    };
+    if (sort === 'app') {
+		results.sort((a, b) => (a.App > b.App ? 1 : -1));
+	}
+	if (sort === 'rating') {
+		results.sort((b, a) => (a.Rating > b.Rating ? 1 : -1));
+	}
 
-    res.json(results);
+    res.status(200).json(results);
 });
 
 app.listen(8000, () => {
